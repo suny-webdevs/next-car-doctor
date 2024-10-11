@@ -5,6 +5,7 @@ import bcrypt from "bcrypt"
 import GoogleProvider from "next-auth/providers/google"
 import LinkedInProvider from "next-auth/providers/linkedin"
 import FacebookProvider from "next-auth/providers/facebook"
+import { NextResponse } from "next/server"
 
 const handler = NextAuth({
   secret: process.env.NEXT_PUBLIC_AUTH_SECRETE,
@@ -69,7 +70,10 @@ const handler = NextAuth({
           }
           return user
         } catch (error) {
-          console.log(error)
+          return NextResponse.json({
+            status: 400,
+            message: "Something went wrong!",
+          })
         }
       } else {
         return user
